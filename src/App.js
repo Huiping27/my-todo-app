@@ -1,43 +1,40 @@
 import React from 'react';
+import './App.css';
 import Todo from './Todo';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './App.css';
+import moment from 'moment';
+import 'moment/locale/en-au'; // Adjust the locale as needed
 
-const localizer = momentLocalizer(moment);
+// Optional: You can import additional CSS for custom styling
+import './calendar.css';
 
 function App() {
-  const events = [
-    {
-      title: 'Meeting',
-      start: new Date(2024, 6, 16, 10, 0),
-      end: new Date(2024, 6, 16, 12, 0),
-    },
-    {
-      title: 'Lunch',
-      start: new Date(2024, 6, 17, 12, 0),
-      end: new Date(2024, 6, 17, 13, 0),
-      desc: 'Lunch with team',
-    },
-  ];
+  const localizer = momentLocalizer(moment);
 
   return (
     <div className="App">
-      <div className="todo-container">
-        <Todo />
-      </div>
-      <div className="calendar-container">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-        />
-      </div>
+      <h1>Todo App with Calendar</h1>
+      <Todo />
+      <Calendar
+        localizer={localizer}
+        events={[
+          // Example events data
+          {
+            title: 'Meeting',
+            start: new Date(2024, 7, 1, 10, 0), // year, month (0-indexed), day, hour, minute
+            end: new Date(2024, 7, 1, 12, 0),
+          },
+          {
+            title: 'Birthday Party',
+            start: new Date(2024, 7, 2, 12, 0),
+            end: new Date(2024, 7, 2, 15, 0),
+          },
+        ]}
+        style={{ height: 500 }} // Adjust the height as needed
+      />
     </div>
   );
 }
 
 export default App;
-
