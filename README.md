@@ -73,4 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 https://huiping27.github.io/my-todo-app/
 
-----Author @ Huiping Li
+### Author
+
+Huiping Li
