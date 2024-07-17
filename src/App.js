@@ -5,9 +5,11 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import 'moment/locale/en-au'; 
-import './calendar.css'; // Ensure this file exists in the correct location
+import './calendar.css'; // Stelle sicher, dass diese Datei existiert
 import DnDContext from './DnDContext';
 import { useDrop } from 'react-dnd';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const App = () => {
   const localizer = momentLocalizer(moment);
@@ -31,7 +33,7 @@ const App = () => {
     drop: (item, monitor) => {
       const offset = monitor.getClientOffset();
       const eventStart = new Date();
-      eventStart.setHours(offset.x / 10, 0, 0, 0); // Simple logic to calculate time
+      eventStart.setHours(offset.x / 10, 0, 0, 0); // Einfache Logik zur Berechnung der Zeit
       const eventEnd = new Date(eventStart);
       eventEnd.setHours(eventStart.getHours() + 1);
 
@@ -49,33 +51,35 @@ const App = () => {
   }));
 
   return (
-    <DnDContext>
-      <div className="App">
-        <h1>Todo App with Calendar</h1>
-        <Todo />
-        <div ref={drop} style={{ height: 500, position: 'relative' }}>
-          <Calendar
-            localizer={localizer}
-            events={events}
-            onSelectEvent={(event) => console.log('Event selected:', event)}
-            style={{ height: '100%' }}
-          />
-          {isOver && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                zIndex: 1,
-              }}
+    <DragDropContext backend={HTML5Backend}>
+      <DnDContext>
+        <div className="App">
+          <h1>Todo App with Calendar</h1>
+          <Todo />
+          <div ref={drop} style={{ height: 500, position: 'relative' }}>
+            <Calendar
+              localizer={localizer}
+              events={events}
+              onSelectEvent={(event) => console.log('Event selected:', event)}
+              style={{ height: '100%' }}
             />
-          )}
+            {isOver && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                  zIndex: 1,
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </DnDContext>
+      </DnDContext>
+    </DragDropContext>
   );
 };
 
