@@ -62,3 +62,6 @@ https://huiping27.github.io/my-todo-app/
 ### Author
 
 Huiping Li
+
+## License
+This app is licensed under the MIT License. See the LICENSE file for more information.
